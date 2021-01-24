@@ -359,9 +359,9 @@ bool Canvas::setWrap(const Texture::Wrap &w)
 
 	if (!gl.isClampZeroTextureWrapSupported())
 	{
-		if (wrap.s == WRAP_CLAMP_ZERO) wrap.s = WRAP_CLAMP;
-		if (wrap.t == WRAP_CLAMP_ZERO) wrap.t = WRAP_CLAMP;
-		if (wrap.r == WRAP_CLAMP_ZERO) wrap.r = WRAP_CLAMP;
+		if (wrap.s == WRAP_CLAMP_ZERO || wrap.s == WRAP_CLAMP_ONE) wrap.s = WRAP_CLAMP;
+		if (wrap.t == WRAP_CLAMP_ZERO || wrap.t == WRAP_CLAMP_ONE) wrap.t = WRAP_CLAMP;
+		if (wrap.r == WRAP_CLAMP_ZERO || wrap.r == WRAP_CLAMP_ONE) wrap.r = WRAP_CLAMP;
 	}
 
 	gl.bindTextureToUnit(this, 0, false);

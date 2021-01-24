@@ -252,8 +252,9 @@ int main(int argc, char **argv)
 	}
 
 	int retval = 0;
+	argc = 2;
 	DoneAction done = DONE_QUIT;
-
+	argv[1] = "D:\\love2d\\love2dgame";
 	do
 	{
 		done = runlove(argc, argv, retval);

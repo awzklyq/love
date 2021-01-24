@@ -582,6 +582,8 @@ GLenum OpenGL::getGLPrimitiveType(PrimitiveType type)
 		return GL_TRIANGLE_FAN;
 	case PRIMITIVE_POINTS:
 		return GL_POINTS;
+	case PRIMITIVE_LINES:
+		return GL_LINES;
 	case PRIMITIVE_MAX_ENUM:
 		return GL_ZERO;
 	}
@@ -1082,6 +1084,7 @@ GLint OpenGL::getGLWrapMode(Texture::WrapMode wmode)
 	default:
 		return GL_CLAMP_TO_EDGE;
 	case Texture::WRAP_CLAMP_ZERO:
+	case  Texture::WRAP_CLAMP_ONE:
 		return GL_CLAMP_TO_BORDER;
 	case Texture::WRAP_REPEAT:
 		return GL_REPEAT;
@@ -1122,6 +1125,12 @@ void OpenGL::setTextureWrap(TextureType target, const graphics::Texture::Wrap &w
 
 	if (target == TEXTURE_VOLUME)
 		glTexParameteri(getGLTextureType(target), GL_TEXTURE_WRAP_R, getGLWrapMode(w.r));
+
+	if (w.t == Texture::WRAP_CLAMP_ONE || w.s == Texture::WRAP_CLAMP_ONE || w.r == Texture::WRAP_CLAMP_ONE)
+	{
+		float ones[] = { 1.0f,1.0f,1.0f,1.0f };
+		glTexParameterfv(getGLTextureType(target), GL_TEXTURE_BORDER_COLOR, ones);
+	}
 }
 
 bool OpenGL::rawTexStorage(TextureType target, int levels, PixelFormat pixelformat, bool &isSRGB, int width, int height, int depth)
