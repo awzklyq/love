@@ -70,7 +70,7 @@ int w_Canvas_renderTo(lua_State *L)
 		lua_settop(L, 2); // make sure the function is on top of the stack
 		int status = lua_pcall(L, 0, 0, 0);
 
-		graphics->setCanvas(oldtargets);
+		graphics->setCanvas(oldtargets, 0, 0, 0, 0);
 
 		for (auto c : oldtargets.colors)
 			c.canvas->release();

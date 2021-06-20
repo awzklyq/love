@@ -554,7 +554,7 @@ void Graphics::setCanvas(RenderTarget rt, uint32 temporaryRTFlags)
 	rts.colors.push_back(rt);
 	rts.temporaryRTFlags = temporaryRTFlags;
 
-	setCanvas(rts);
+	setCanvas(rts, 0 ,0, 0, 0);
 }
 
 void Graphics::setCanvas(const RenderTargetsStrongRef &rts)
@@ -568,10 +568,10 @@ void Graphics::setCanvas(const RenderTargetsStrongRef &rts)
 	targets.depthStencil = RenderTarget(rts.depthStencil.canvas, rts.depthStencil.slice, rts.depthStencil.mipmap);
 	targets.temporaryRTFlags = rts.temporaryRTFlags;
 
-	return setCanvas(targets);
+	return setCanvas(targets, 0, 0, 0, 0);
 }
 
-void Graphics::setCanvas(const RenderTargets &rts)
+void Graphics::setCanvas(const RenderTargets &rts, int px, int py, int pw, int ph)
 {
 	DisplayState &state = states.back();
 	int ncanvases = (int) rts.colors.size();
@@ -708,10 +708,10 @@ void Graphics::setCanvas(const RenderTargets &rts)
 		realRTs.depthStencil.canvas = getTemporaryCanvas(dsformat, pixelw, pixelh, reqmsaa);
 		realRTs.depthStencil.slice = 0;
 
-		setCanvasInternal(realRTs, w, h, pixelw, pixelh, hasSRGBcanvas);
+		setCanvasInternal(realRTs, px, py, w, h, pw > 0 ? pw : pixelw, ph > 0 ? ph :  pixelh, hasSRGBcanvas);
 	}
 	else
-		setCanvasInternal(rts, w, h, pixelw, pixelh, hasSRGBcanvas);
+		setCanvasInternal(rts, px, py, w, h, pw > 0 ? pw : pixelw, ph > 0 ? ph : pixelh, hasSRGBcanvas);
 
 	RenderTargetsStrongRef refs;
 	refs.colors.reserve(rts.colors.size());
@@ -735,7 +735,7 @@ void Graphics::setCanvas()
 		return;
 
 	flushStreamDraws();
-	setCanvasInternal(RenderTargets(), width, height, pixelWidth, pixelHeight, isGammaCorrect());
+	setCanvasInternal(RenderTargets(), 0, 0, width, height, pixelWidth, pixelHeight, isGammaCorrect());
 
 	state.renderTargets = RenderTargetsStrongRef();
 	canvasSwitchCount++;

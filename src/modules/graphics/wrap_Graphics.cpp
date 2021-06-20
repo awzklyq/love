@@ -277,6 +277,10 @@ int w_setCanvas(lua_State *L)
 
 	bool is_table = lua_istable(L, 1);
 	Graphics::RenderTargets targets;
+	int px = 0;
+	int py = 0;
+	int pw = 0;
+	int ph = 0;
 
 	if (is_table)
 	{
@@ -319,6 +323,11 @@ int w_setCanvas(lua_State *L)
 
 		if (targets.depthStencil.canvas == nullptr && (targets.temporaryRTFlags & tempstencilflag) == 0)
 			targets.temporaryRTFlags |= luax_boolflag(L, 1, "stencil", false) ? tempstencilflag : 0;
+
+		px = luax_intflag(L, 1, "ViewportX", 0);
+		py = luax_intflag(L, 1, "ViewportY", 0);
+		pw = luax_intflag(L, 1, "ViewportW", 0);
+		ph = luax_intflag(L, 1, "ViewportH", 0);
 	}
 	else
 	{
@@ -347,9 +356,14 @@ int w_setCanvas(lua_State *L)
 		}
 	}
 
+	if (pw > 0)
+	{
+		int xx = 0;
+	}
+
 	luax_catchexcept(L, [&]() {
 		if (targets.getFirstTarget().canvas != nullptr)
-			instance()->setCanvas(targets);
+			instance()->setCanvas(targets, px, py, pw, ph);
 		else
 			instance()->setCanvas();
 	});

@@ -587,7 +587,7 @@ public:
 	Shader *getShader() const;
 
 	void setCanvas(RenderTarget rt, uint32 temporaryRTFlags);
-	void setCanvas(const RenderTargets &rts);
+	void setCanvas(const RenderTargets &rts, int px, int py, int pw, int ph);
 	void setCanvas(const RenderTargetsStrongRef &rts);
 	void setCanvas();
 
@@ -1011,7 +1011,7 @@ protected:
 	virtual Shader *newShaderInternal(ShaderStage *vertex, ShaderStage *pixel) = 0;
 	virtual StreamBuffer *newStreamBuffer(BufferType type, size_t size) = 0;
 
-	virtual void setCanvasInternal(const RenderTargets &rts, int w, int h, int pixelw, int pixelh, bool hasSRGBcanvas) = 0;
+	virtual void setCanvasInternal(const RenderTargets &rts, int x, int y, int w, int h, int pixelw, int pixelh, bool hasSRGBcanvas) = 0;
 
 	virtual void initCapabilities() = 0;
 	virtual void getAPIStats(int &shaderswitches) const = 0;

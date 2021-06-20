@@ -139,7 +139,7 @@ private:
 	love::graphics::ShaderStage *newShaderStageInternal(ShaderStage::StageType stage, const std::string &cachekey, const std::string &source, bool gles) override;
 	love::graphics::Shader *newShaderInternal(love::graphics::ShaderStage *vertex, love::graphics::ShaderStage *pixel) override;
 	love::graphics::StreamBuffer *newStreamBuffer(BufferType type, size_t size) override;
-	void setCanvasInternal(const RenderTargets &rts, int w, int h, int pixelw, int pixelh, bool hasSRGBcanvas) override;
+	void setCanvasInternal(const RenderTargets &rts, int x, int y, int w, int h, int pixelw, int pixelh, bool hasSRGBcanvas) override;
 	void initCapabilities() override;
 	void getAPIStats(int &shaderswitches) const override;
 

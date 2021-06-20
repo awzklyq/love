@@ -474,7 +474,7 @@ void Graphics::setDebug(bool enable)
 	::printf("OpenGL debug output enabled (LOVE_GRAPHICS_DEBUG=1)\n");
 }
 
-void Graphics::setCanvasInternal(const RenderTargets &rts, int w, int h, int pixelw, int pixelh, bool hasSRGBcanvas)
+void Graphics::setCanvasInternal(const RenderTargets &rts, int x, int y, int w, int h, int pixelw, int pixelh, bool hasSRGBcanvas)
 {
 	const DisplayState &state = states.back();
 
@@ -507,7 +507,7 @@ void Graphics::setCanvasInternal(const RenderTargets &rts, int w, int h, int pix
 
 	glFrontFace(vertexwinding == vertex::WINDING_CW ? GL_CW : GL_CCW);
 
-	gl.setViewport({0, 0, pixelw, pixelh});
+	gl.setViewport({x, y, pixelw, pixelh});
 
 	// Re-apply the scissor if it was active, since the rectangle passed to
 	// glScissor is affected by the viewport dimensions.
